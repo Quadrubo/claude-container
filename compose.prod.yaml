@@ -1,0 +1,21 @@
+services:
+  claude:
+    image: ghcr.io/quadrubo/claude-container:latest
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    environment:
+      REMOTE_NAME: servy
+      REMOTE_CAPACITY: 64
+    volumes:
+      - config:/home/claude/.claude
+      - workspace:/workspace
+      - ./managed-settings.json:/etc/claude-code/managed-settings.json:ro
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  config:
+  workspace:

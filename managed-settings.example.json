@@ -1,0 +1,8 @@
+{
+  "managedMcpServers": {
+    "trek": {
+      "type": "http",
+      "url": "https://trek.example.com/mcp"
+    }
+  }
+}
