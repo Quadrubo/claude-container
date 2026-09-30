@@ -3,8 +3,8 @@
 The image runs a [Claude Code](https://code.claude.com) Remote Control
 server. The Claude app and claude.ai/code start sessions in it, and each
 session works in a git worktree of its own. It is published for amd64 and
-arm64 at `ghcr.io/quadrubo/claude-container`, and each tag is the Claude
-Code version it holds.
+arm64 at `ghcr.io/quadrubo/claude-container`, and each tag names the image
+version and the Claude Code version, such as `1.0.0-2.1.280`.
 
 ## Usage
 
@@ -51,11 +51,13 @@ just up          # start the server, just logs and just down follow
 just check       # everything a commit must pass
 ```
 
-The workflow reads the newest version of the `stable` channel from the apt
-repository of Anthropic every six hours. It builds each new version and
-publishes the tags `2.1.280`, `2.1` and `latest`. `keys/claude-code.asc`
-is the signing key of that repository, with the fingerprint
-`31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE`.
+An image tag holds the image version and the Claude Code version, such as
+`1.0.0-2.1.280`. A git tag such as `v1.0.0` releases the image version with
+the newest Claude Code version of the `stable` channel. Every six hours the
+workflow rebuilds the newest release when that channel has a new version.
+Each release build also publishes `latest`, and a push to `main` publishes
+`main`. `keys/claude-code.asc` is the signing key of the apt repository of
+Anthropic, with the fingerprint `31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE`.
 
 The entrypoint writes the answers to the trust dialog and to the Remote
 Control question into `.claude.json`. The Remote Control answer uses the
